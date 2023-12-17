@@ -1,0 +1,3 @@
+Flask==2.0.1
+secrets==1.0.0
+Werkzeug==2.0.1
