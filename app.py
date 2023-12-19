@@ -1,5 +1,4 @@
-from flask import Flask, request, render_template
-from flask import send_from_directory
+from flask import Flask, request, render_template , send_from_directory
 import os
 import secrets
 from werkzeug.utils import secure_filename
@@ -11,7 +10,7 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Limit file size to 16MB
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # Limit file size to 16MB
 
 # Function to generate a random filename
 
@@ -51,6 +50,14 @@ def download_file(filename):
     except Exception as e:
         print(e)  # Optional: Print the exception for further debugging
         return "File not found or an error occurred while retrieving the file."
+
+
+@app.route('/downloads')
+def show_downloads():
+    files = os.listdir(app.config['UPLOAD_FOLDER'])
+    return render_template('downloads.html', files=files)
+
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)# or change it to 192.168.43.1 to use it in the personpersonal hotspot
